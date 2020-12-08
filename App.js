@@ -12,7 +12,7 @@ import TracksListScreen from './src/screens/TracksListScreen';
 const AuthStack = createStackNavigator();
 const TrackListStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-var isUserAuthenticated = true;
+var isUserAuthenticated = false;
 
 const TrackListFlow = () => {
   return <AuthStack.Navigator initialRouteName="TracksListScreen">
