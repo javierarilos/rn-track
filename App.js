@@ -8,6 +8,7 @@ import SignupScreen from './src/screens/SignupScreen';
 import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
 import TracksListScreen from './src/screens/TracksListScreen';
+import { Provider as AuthProvider } from './src/context/AuthContext';
 
 const AuthStack = createStackNavigator();
 const TrackListStack = createStackNavigator();
@@ -40,5 +41,9 @@ const App = () => {
 };
 
 export default () => {
-  return <App />
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
 };
