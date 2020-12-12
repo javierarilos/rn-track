@@ -31,9 +31,9 @@ const App = () => {
           <Tab.Screen name="TrackCreateScreen" component={TrackCreateScreen} options={{ title: "TrackCreateScreen" }} />
         </Tab.Navigator>
       ) : (
-        <AuthStack.Navigator initialRouteName="SigninScreen">
-          <AuthStack.Screen name="SigninScreen" component={SigninScreen} options={{ title: "SigninScreen" }} />
-          <AuthStack.Screen name="SignupScreen" component={SignupScreen} options={{ title: "SignupScreen" }} />
+        <AuthStack.Navigator initialRouteName="SigninScreen" screenOptions={{headerShown: false}}>
+          <AuthStack.Screen name="SigninScreen" component={SigninScreen} />
+          <AuthStack.Screen name="SignupScreen" component={SignupScreen} />
         </AuthStack.Navigator>
       )}
     </NavigationContainer>)
