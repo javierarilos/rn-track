@@ -8,12 +8,11 @@ import SignupScreen from './src/screens/SignupScreen';
 import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
 import TracksListScreen from './src/screens/TracksListScreen';
-import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Context as AuthContext, Provider as AuthProvider } from './src/context/AuthContext';
 
 const AuthStack = createStackNavigator();
 const TrackListStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-var isUserAuthenticated = false;
 
 const TrackListFlow = () => {
   return <AuthStack.Navigator initialRouteName="TracksListScreen">
@@ -23,9 +22,12 @@ const TrackListFlow = () => {
 }
 
 const App = () => {
+
+  const { isSignedIn } = React.useContext(AuthContext);
+  
   return (
     <NavigationContainer>
-      {isUserAuthenticated ? (
+      {isSignedIn() ? (
         <Tab.Navigator>
           <Tab.Screen name="TracksListFlow" component={TrackListFlow} options={{ title: "TracksListFlow" }} />
           <Tab.Screen name="AccountScreen" component={AccountScreen} options={{ title: "AccountScreen" }} />
