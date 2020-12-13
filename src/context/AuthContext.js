@@ -7,10 +7,20 @@ import { useNavigation } from '@react-navigation/native';
 const authReducer = (state, action) => {
     switch (action.type) {
         case 'add_error':
-            return { ...state, errorMessage: action.payload }
+            return {
+                ...state,
+                errorMessage: action.payload
+            }
         case 'signup':
             return {
                 token: action.token,
+                isSignedIn: true,
+                errorMessage: ''
+            }
+        case 'signout':
+            return {
+                token: '',
+                isSignedIn: false,
                 errorMessage: ''
             }
         default:
@@ -23,10 +33,12 @@ const signup = (dispatch) => {
         try {
             const response = await trackerApi.post('/signup', { email, password });
             await AsyncStorage.setItem('token', response.data.token);
-            dispatch({ type: 'signup', payload: response.token })
+            dispatch({ type: 'signup', payload: response.token });
+            return true;
         } catch (err) {
             console.log(err.response.data);
             dispatch({ type: 'add_error', payload: 'error during sign up.' })
+            return false;
         }
     }
 };
@@ -37,7 +49,12 @@ const signin = (dispatch) => {
 };
 
 const signout = (dispatch) => {
-    return () => {
+    return async () => {
+        console.log('Sign out by user request.');
+        await AsyncStorage.removeItem('token');
+        const currentToken = await AsyncStorage.getItem('token');
+        console.log('Current token in Storage=' + currentToken);
+        dispatch({type: 'signout'});
     }
 };
 

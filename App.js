@@ -23,23 +23,23 @@ const TrackListFlow = () => {
 
 const App = () => {
 
-  const { isSignedIn } = React.useContext(AuthContext);
-  
+  const { state } = React.useContext(AuthContext);
+
   return (
     <NavigationContainer>
-      {isSignedIn() ? (
+      {state.isSignedIn ? (
         <Tab.Navigator>
           <Tab.Screen name="TracksListFlow" component={TrackListFlow} options={{ title: "TracksListFlow" }} />
           <Tab.Screen name="AccountScreen" component={AccountScreen} options={{ title: "AccountScreen" }} />
           <Tab.Screen name="TrackCreateScreen" component={TrackCreateScreen} options={{ title: "TrackCreateScreen" }} />
         </Tab.Navigator>
       ) : (
-        <AuthStack.Navigator initialRouteName="SigninScreen" screenOptions={{headerShown: false}}>
-          <AuthStack.Screen name="SigninScreen" component={SigninScreen} />
-          <AuthStack.Screen name="SignupScreen" component={SignupScreen} />
-        </AuthStack.Navigator>
-      )}
-    </NavigationContainer>)
+          <AuthStack.Navigator initialRouteName="SigninScreen" screenOptions={{ headerShown: false }}>
+            <AuthStack.Screen name="SigninScreen" component={SigninScreen} />
+            <AuthStack.Screen name="SignupScreen" component={SignupScreen} />
+          </AuthStack.Navigator>
+        )}
+  </NavigationContainer>)
 };
 
 export default () => {

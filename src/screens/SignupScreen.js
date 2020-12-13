@@ -13,32 +13,34 @@ const SignupScreen = ({ navigation }) => {
         <Spacer>
             <Text h3>Sign up for Tracker</Text>
         </Spacer>
-            <Input 
-                label="Email" 
-                value={email} 
-                onChangeText={setEmail}
-                autoCapitalize="none"
-                autoCorrect={false}/>
-            <Input 
-                label="Password" 
-                value={password} 
-                onChangeText={setPassword}
-                autoCapitalize="none"
-                autoCorrect={false}
-                secureTextEntry/>
-            {state.errorMessage ? <Text style={styles.errorMessage}>{state.errorMessage}</Text> : null}
+        <Input
+            label="Email"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            autoCorrect={false} />
+        <Input
+            label="Password"
+            value={password}
+            onChangeText={setPassword}
+            autoCapitalize="none"
+            autoCorrect={false}
+            secureTextEntry />
+        {state.errorMessage ? <Text style={styles.errorMessage}>{state.errorMessage}</Text> : null}
         <Spacer>
-            <Button title="Sign up" onPress={() => signup({email, password})}/>
+            <Button title="Sign up" onPress={async () => {
+                const signupOk = await signup({ email, password });
+            }} />
         </Spacer>
     </View>);
 };
 
 const styles = StyleSheet.create({
     container: {
-       flex: 1,
-       justifyContent: 'center',
-       marginTop: 50,
-       marginBottom: 250
+        flex: 1,
+        justifyContent: 'center',
+        marginTop: 50,
+        marginBottom: 250
     },
     errorMessage: {
         fontSize: 16,
