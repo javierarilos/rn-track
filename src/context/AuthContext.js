@@ -78,18 +78,20 @@ const signout = (dispatch) => {
     }
 };
 
-const isSignedIn = (dispatch) => {
+const loadAuth = (dispatch) => {
     return async () => {
         const token = await AsyncStorage.getItem('token');
         const isIt = token !== '' && token !== null;
         console.log("- isSignedIn=" + isIt + ' token=' + token);
         console.log(token);
-        return isIt;
+        dispatch({type: isIt ? 'signin' : 'signout', payload: isIt})
     }
 };
 
+let initialState = { isSignedIn: false, errorMessage: '', token: null }
+
 export const { Provider, Context } = createDataContext(
     authReducer,
-    { signin, signout, signup, isSignedIn, clearErrorMessage },
-    { isSignedIn: false, errorMessage: '', token: null }
+    { signin, signout, signup, loadAuth, clearErrorMessage },
+    initialState
 );

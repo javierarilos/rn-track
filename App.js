@@ -23,7 +23,17 @@ const TrackListFlow = () => {
 
 const App = () => {
 
-  const { state } = React.useContext(AuthContext);
+  const { state, loadAuth } = React.useContext(AuthContext);
+
+  React.useEffect(() => {
+    console.log('App.useEffect...');
+    const bootstrapAsync = async () => {
+      await loadAuth()
+    }
+    bootstrapAsync();
+    console.log('Loaded auth')
+    console.log(state)
+  }, []);
 
   return (
     <NavigationContainer>
