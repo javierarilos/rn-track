@@ -10,7 +10,7 @@ const authReducer = (state, action) => {
                 ...state,
                 errorMessage: action.payload
             }
-        case 'signup':
+        case 'signin':
             return {
                 token: action.token,
                 isSignedIn: true,
@@ -20,6 +20,11 @@ const authReducer = (state, action) => {
             return {
                 token: '',
                 isSignedIn: false,
+                errorMessage: ''
+            }
+        case 'clear_error':
+            return {
+                ...state,
                 errorMessage: ''
             }
         default:
@@ -32,7 +37,7 @@ const signup = (dispatch) => {
         try {
             const response = await trackerApi.post('/signup', { email, password });
             await AsyncStorage.setItem('token', response.data.token);
-            dispatch({ type: 'signup', payload: response.token });
+            dispatch({ type: 'signin', payload: response.data.token });
             return true;
         } catch (err) {
             console.log(err.response.data);
@@ -43,9 +48,25 @@ const signup = (dispatch) => {
 };
 
 const signin = (dispatch) => {
-    return ({ email, password }) => {
+    return async ({ email, password }) => {
+        try {
+            const response = await trackerApi.post('/signin', { email, password });
+            await AsyncStorage.setItem('token', response.data.token);
+            dispatch({ type: 'signin', payload: response.data.token });
+            return true;
+        } catch (err) {
+            console.log(err.response.data);
+            dispatch({ type: 'add_error', payload: 'error during sign up.' })
+            return false;
+        }
     }
 };
+
+const clearErrorMessage = (dispatch) => {
+    return () => {
+        dispatch({type: 'clear_error'})
+    }
+}
 
 const signout = (dispatch) => {
     return async () => {
