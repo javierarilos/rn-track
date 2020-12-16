@@ -56,7 +56,7 @@ const signin = (dispatch) => {
             return true;
         } catch (err) {
             console.log(err.response.data);
-            dispatch({ type: 'add_error', payload: 'error during sign up.' })
+            dispatch({ type: 'add_error', payload: 'error during sign in.' })
             return false;
         }
     }
@@ -90,6 +90,6 @@ const isSignedIn = (dispatch) => {
 
 export const { Provider, Context } = createDataContext(
     authReducer,
-    { signin, signout, signup, isSignedIn },
+    { signin, signout, signup, isSignedIn, clearErrorMessage },
     { isSignedIn: false, errorMessage: '', token: null }
 );

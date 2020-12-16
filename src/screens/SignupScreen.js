@@ -4,12 +4,17 @@ import { Context as AuthContext } from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
 
-const SignupScreen = () => {
-    const { state, signup } = useContext(AuthContext);
+const SignupScreen = ({ navigation }) => {
+    const { state, signup, clearErrorMessage } = useContext(AuthContext);
+
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', clearErrorMessage);
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <View style={styles.container}>
-            <AuthForm 
+            <AuthForm
                 headerText='Sign Up for Tracker'
                 errorMessage={state.errorMessage}
                 submitButtonText='Sign Up'
@@ -29,7 +34,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 50,
         marginBottom: 250
-    },    
+    },
 });
 
 export default SignupScreen;

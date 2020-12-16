@@ -5,7 +5,13 @@ import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
 
 const SigninScreen = ({ navigation }) => {
-    const { state, signin } = useContext(AuthContext);
+    const { state, signin, clearErrorMessage } = useContext(AuthContext);
+
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', clearErrorMessage);
+        return unsubscribe;
+      }, [navigation]);
+
     return (<View style={styles.container}>
         <AuthForm
             headerText="Sign in to your account"
