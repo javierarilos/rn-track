@@ -13,12 +13,14 @@ const authReducer = (state, action) => {
         case 'signin':
             return {
                 token: action.token,
+                isAuthInitialized: true,
                 isSignedIn: true,
                 errorMessage: ''
             }
         case 'signout':
             return {
                 token: '',
+                isAuthInitialized: true,
                 isSignedIn: false,
                 errorMessage: ''
             }
@@ -88,7 +90,7 @@ const loadAuth = (dispatch) => {
     }
 };
 
-let initialState = { isSignedIn: false, errorMessage: '', token: null }
+let initialState = { isAuthInitialized: false, isSignedIn: false, errorMessage: '', token: null }
 
 export const { Provider, Context } = createDataContext(
     authReducer,

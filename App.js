@@ -35,6 +35,10 @@ const App = () => {
     console.log(state)
   }, []);
 
+  if (!state.isAuthInitialized) {
+    return (<></>);
+  }
+
   return (
     <NavigationContainer>
       {state.isSignedIn ? (
