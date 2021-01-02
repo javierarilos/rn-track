@@ -9,6 +9,7 @@ import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
 import TracksListScreen from './src/screens/TracksListScreen';
 import { Context as AuthContext, Provider as AuthProvider } from './src/context/AuthContext';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const AuthStack = createStackNavigator();
 const TrackListStack = createStackNavigator();
@@ -42,7 +43,7 @@ const App = () => {
   return (
     <NavigationContainer>
       {state.isSignedIn ? (
-        <Tab.Navigator>
+        <Tab.Navigator initialRouteName="TracksListFlow">
           <Tab.Screen name="TracksListFlow" component={TrackListFlow} options={{ title: "TracksListFlow" }} />
           <Tab.Screen name="AccountScreen" component={AccountScreen} options={{ title: "AccountScreen" }} />
           <Tab.Screen name="TrackCreateScreen" component={TrackCreateScreen} options={{ title: "TrackCreateScreen" }} />
@@ -53,13 +54,15 @@ const App = () => {
             <AuthStack.Screen name="SignupScreen" component={SignupScreen} />
           </AuthStack.Navigator>
         )}
-  </NavigationContainer>)
+    </NavigationContainer>)
 };
 
 export default () => {
   return (
     <AuthProvider>
-      <App />
+      <SafeAreaProvider>
+        <App />
+      </SafeAreaProvider>
     </AuthProvider>
   );
 };
